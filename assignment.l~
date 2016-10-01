@@ -1,0 +1,22 @@
+%{
+#include<stdio.h>
+#include<string.h>
+char output[1000]="nothing \0";
+%}
+
+%%
+
+[a-zA-Z_][a-zA-Z_0-9]* {strcat(output, "var ");}
+
+%%
+
+main(int argc,char *argv[])
+{
+
+yyin=fopen(argv[1],"r");
+
+yylex();
+
+printf("/s", output);
+}
+
