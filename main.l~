@@ -28,6 +28,6 @@ yyin=fopen(argv[1],"r");
 
 yylex();
 
-printf("%s\n",output);
+//printf("%s\n",output);
 }
 
