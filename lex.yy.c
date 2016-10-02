@@ -1883,9 +1883,13 @@ main(int argc,char *argv[])
 {
 
 yyin=fopen(argv[1],"r");
-
-yylex();
-
+if(yyin==NULL)
+	printf("File does not exist\n");	
+else
+{
+	yylex();
+	printf("\n");
+}
 }
 
 

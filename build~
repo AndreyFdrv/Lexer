@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo apt-get install byacc flex
+sudo apt-get install gcc
+
