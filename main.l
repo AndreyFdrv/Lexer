@@ -5,6 +5,25 @@ int colno=1, lineno=1;
 %}
 
 %%
+[/][/][^\n]*[\n] {printf("Comment(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
+colno=1;
+lineno=lineno+1;}
+[(][*]([^\n]|[\n])*[*][)] {int i;
+int begin_lineno=lineno;
+int begin_colno=colno;
+int end_colno;
+for(i=0; i<yyleng; i++)
+{
+	colno=colno+1;
+	if(yytext[i]=='\n')
+	{
+		end_colno=colno;
+		colno=1;
+		lineno=lineno+1;
+	}
+}
+printf("Comment(%d, %d, %d, %d); ", begin_lineno, lineno, begin_colno, end_colno);
+}
 [\n] {colno=1;
 lineno=lineno+1;}
 [ ] {colno=colno+1;}
