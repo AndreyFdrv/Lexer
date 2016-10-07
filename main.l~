@@ -5,6 +5,9 @@ int colno=1, lineno=1;
 %}
 
 %%
+[*][*] {printf("Op(\"**\",%d, %d, %d); ", lineno, colno, colno-1+yyleng);
+colno=colno+yyleng;
+}
 [/][/][^\n]*[\n] {printf("Comment(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=1;
 lineno=lineno+1;}
@@ -22,7 +25,7 @@ for(i=0; i<yyleng; i++)
 		lineno=lineno+1;
 	}
 }
-printf("Comment(%d, %d, %d, %d); ", begin_lineno, lineno-1, begin_colno, end_colno);
+printf("Comment(%d, %d, %d, %d); ", begin_lineno, lineno, begin_colno, end_colno);
 }
 [\n] {colno=1;
 lineno=lineno+1;}
