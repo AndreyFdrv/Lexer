@@ -15,7 +15,7 @@ text[yyleng-3]='\0';
 printf("Comment(\"%s\", %d, %d, %d); ", text,lineno, colno, colno-1+yyleng);
 colno=1;
 lineno=lineno+1;}
-[(][*]([^*])*([^)])*[*][)] {int i;
+[(][*]((([^*])*([^)])*)|((([^*])*([^)])*[*][^)]+[)]([^*])*([^)])*))*)[*][)] {int i;
 int begin_lineno=lineno;
 int begin_colno=colno;
 int end_colno;
