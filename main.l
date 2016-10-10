@@ -15,7 +15,7 @@ text[yyleng-3]='\0';
 printf("Comment(\"%s\", %d, %d, %d); ", text,lineno, colno, colno-1+yyleng);
 colno=1;
 lineno=lineno+1;}
-[(][*]([^\n]|[\n])*[^(][^*][*][)] {int i;
+[(][*]([^*])*([^)])*[*][)] {int i;
 int begin_lineno=lineno;
 int begin_colno=colno;
 int end_colno;
@@ -37,10 +37,7 @@ for(i=2; i<yyleng; i++)
 text[yyleng-4]='\0';
 printf("Comment(\"%s\", %d, %d, %d, %d); ", text, begin_lineno, lineno, begin_colno, end_colno);
 }
-[(][*][*][)] {printf("Comment(\"\", %d, %d, %d, %d); ", lineno, lineno, colno, colno+yyleng);
-colno=colno+yyleng;
-}
-[^(][*][*] {printf("Op(\"**\", %d, %d, %d); ", lineno, colno, colno-1+yyleng);
+[*][*] {printf("Op(\"**\", %d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;
 }
 [\n] {colno=1;
@@ -73,7 +70,7 @@ colno=colno+yyleng;}
 ([+|\-|/|%|>|<])|([=|\!][=])|([>|<][=])|([&][&])|([\|][\|]) {yytext [yyleng] = (char) 0; 
 printf("Op(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
-([^(][*]) {printf("Op(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
+([*]) {printf("Op(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [1-9][0-9]* {yytext [yyleng] = (char) 0;
 printf("Num(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
