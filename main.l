@@ -25,7 +25,6 @@ text[yyleng-3]='\0';
 char temp[100];
 sprintf(temp, "Comment(\"%s\", %d, %d, %d); ", text, lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("Comment(\"%s\", %d, %d, %d); ", text, lineno, colno, colno-1+yyleng);
 colno=1;
 lineno=lineno+1;
 }
@@ -69,14 +68,12 @@ text[yyleng-4]='\0';
 char temp[100];
 sprintf(temp, "Comment(\"%s\", %d, %d, %d, %d); ", text, begin_lineno, lineno, begin_colno, end_colno);
 strcat(lexems, temp);
-//printf("Comment(\"%s\", %d, %d, %d, %d); ", text, begin_lineno, lineno, begin_colno, end_colno);
 }
 }
 [*][*] {
 char temp[100];
 sprintf(temp, "Op(\"**\", %d, %d, %d); ", lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("Op(\"**\", %d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;
 }
 [\n] {colno=1;
@@ -87,97 +84,81 @@ lineno=lineno+1;}
 char temp[100];
 sprintf(temp, "KW_Skip(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("KW_Skip(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [:][=] {
 char temp[100];
 sprintf(temp, "Assignment(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("Assignment(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [\;] {
 char temp[100];
 sprintf(temp, "Colon(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("Colon(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [w][r][i][t][e] {
 char temp[100];
 sprintf(temp, "KW_Write(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("KW_Write(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [r][e][a][d] {
 char temp[100];
 sprintf(temp, "KW_Read(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("KW_Read(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [w][h][i][l][e] {
 char temp[100];
 sprintf(temp, "KW_While(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("KW_While(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [d][o] {
 char temp[100];
 sprintf(temp, "KW_Do(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("KW_Do(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [i][f] {
 char temp[100];
 sprintf(temp, "KW_If(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("KW_If(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [t][h][e][n] {
 char temp[100];
 sprintf(temp, "KW_Then(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("KW_Then(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [e][l][s][e] {
 char temp[100];
 sprintf(temp, "KW_Else(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("KW_Else(%d, %d, %d); ", lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [a-zA-Z_][a-zA-Z_0-9]* {yytext [yyleng] = (char) 0;
 char temp[100];
 sprintf(temp, "Var(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("Var(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 ([+|\-|/|%|>|<])|([=|\!][=])|([>|<][=])|([&][&])|([\|][\|]) {yytext [yyleng] = (char) 0;
 char temp[100];
 sprintf(temp, "Op(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("Op(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 ([*]) {
 char temp[100];
 sprintf(temp, "Op(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("Op(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [1-9][0-9]* {yytext [yyleng] = (char) 0;
 char temp[100];
 sprintf(temp, "Num(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("Num(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 ([\(])|([\)]) {yytext [yyleng] = (char) 0;
 char temp[100];
 sprintf(temp, "Parenthesis(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 strcat(lexems, temp);
-//printf("Parenthesis(\"%s\", %d, %d, %d); ", yytext, lineno, colno, colno-1+yyleng);
 colno=colno+yyleng;}
 [^ \r\n] {
 char temp[100];
 sprintf(temp, "Error in line %d, columns %d - %d: \"%s\", lexer has been stoped", lineno, colno, colno-1+yyleng, yytext);
 strcat(lexems, temp);
-//printf("Error in line %d, columns %d - %d: \"%s\", lexer has been stoped", lineno, colno, colno-1+yyleng, yytext);
 return;}
 %%
 
